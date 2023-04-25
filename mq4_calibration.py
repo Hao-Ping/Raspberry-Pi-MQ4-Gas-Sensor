@@ -17,8 +17,16 @@ chan = AnalogIn(ads, ADS.P0)
 # Create differential input between channel 0 and 1
 #chan = AnalogIn(ads, ADS.P0, ADS.P1)
 
-print("{:>5}\t{:>5}".format('raw', 'v'))
+#print("{:>5}\t{:>5}".format('raw', 'v'))
 
 while True:
-    print("{:>5}\t{:>5.5f}".format(chan.value, chan.voltage))
+    #print("{:>5}\t{:>5.5f}".format(chan.value, chan.voltage))
+    sensorVolt = 0
+    for i in range(500):
+        sensorVolt += chan.voltage
+    sensorVolt /= 500
+    print("mean sensorVolt: ", sensorVolt)
+    RS_air = ((5*1) / sensorVolt) - 1
+    R0 = RS_air / 4.4
+    print("R0: ", R0)
     time.sleep(1)
