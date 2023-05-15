@@ -1,3 +1,6 @@
+import csv
+import datetime
+
 import time
 import board
 import busio
@@ -21,7 +24,9 @@ chan = AnalogIn(ads, ADS.P0)
 #print("{:>5}\t{:>5}".format('raw', 'v'))
 #m = -0.350
 #b = 2.417
-R0 = 11.78
+R0 = 4.55
+
+
 
 while True:
     RS_gas = ((5 * 1) / chan.voltage) - 1
@@ -30,4 +35,12 @@ while True:
     #ppm = pow(10, ppm_log)
     ppm = 1000*pow(ratio, -2.95)
     print("ppm: ", ppm, "Voltage: ", chan.voltage)
-    time.sleep(5)
+
+    with open('ppm_20230509.csv', 'a') as f:
+        now = datetime.datetime.now()
+        
+        writer_object =csv.writer(f)
+        writer_object.writerow([now.strftime('%Y/%m/%d %H:%M:%S'), ppm, chan.voltage])
+        f.close()
+
+    time.sleep(10)
