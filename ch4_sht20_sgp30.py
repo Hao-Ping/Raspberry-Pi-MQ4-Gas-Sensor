@@ -26,7 +26,7 @@ chan = AnalogIn(ads, ADS.P0)
 #print("{:>5}\t{:>5}".format('raw', 'v'))
 #m = -0.350
 #b = 2.417
-R0 = 4.55
+R0 = 10.05
 
 
 ##sht20
@@ -76,11 +76,11 @@ while True:
 
     
 
-    with open('all_sensor_data.csv', 'a') as f:
+    with open('/home/haopingpi/Desktop/Raspberry-Pi-MQ4-Gas-Sensor/all_sensor_data_20230518.csv', 'a') as f:
         now = datetime.datetime.now()
 
         writer_object =csv.writer(f)
         writer_object.writerow([now.strftime('%Y/%m/%d %H:%M:%S'), ppm, chan.voltage, temp, humid, eCO2, TVOC])
         f.close()
     print("-------------------------------------------------")
-    time.sleep(10)
+    time.sleep(30)
